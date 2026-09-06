@@ -44,7 +44,7 @@ jobs:
 
       DEFCONFIG_NAME: ${{ matrix.repos.kernelSource.device }}_defconfig
 
-      withKernelSU: ${{ matrix.repos.withKernelSU }}
+      withKernelSU: ${{ matrix.repos.withKernelSU }}   # 变量名保持不变，但内部将集成 SukiSU
     steps:
       - name: "✨ Create working dir"
         run: mkdir -p $kernelDir
@@ -120,9 +120,10 @@ jobs:
           fi
           echo "args=$args" >> $GITHUB_OUTPUT
 
-      - name: "😋 Update KernelSU"
+      # ========== 关键修改：将 KernelSU 替换为 SukiSU ==========
+      - name: "😋 Update SukiSU"   # 步骤名称改为 SukiSU
         working-directory: ./${{ env.kernelDir }}/${{ env.kernelName }}
-        if: ${{ env.withKernelSU == 'true' }}
+        if: ${{ env.withKernelSU == 'true' }}   # 保持变量名兼容，也可改为 withSukiSU，但需同步修改 repos.json
         run: |
           if [ -d "./KernelSU" ]; then
             rm -rf "./KernelSU"
@@ -131,8 +132,10 @@ jobs:
             rm -rf "./drivers/kernelsu"
           fi
 
-          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+          # 改用 SukiSU 官方集成脚本
+          curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s main
 
+          # 这些 CONFIG 选项与 KernelSU 兼容，SukiSU 同样需要
           echo -e "\nCONFIG_KPROBES=y" >> ./arch/${{ env.ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "\nCONFIG_HAVE_KPROBES=y" >> ./arch/${{ env.ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
           echo -e "\nCONFIG_KPROBE_EVENTS=y" >> ./arch/${{ env.ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
