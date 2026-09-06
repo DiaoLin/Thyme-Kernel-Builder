@@ -1,32 +1,25 @@
-[  
-    {
+[
+  {
     "kernelSource": {
-      "name": "kernel_xiaomi_thyme",
-      "repo": "https://github.com/PixelExperience-Devices/kernel_xiaomi_thyme.git",
-      "branch": "thirteen",
-      "device": "thyme"
+      "name": "kernel_xiaomi_odin",
+      "repo": "https://github.com/NOXCIS/kernel_xiaomi_odin",
+      "branch": "sukisu-4.1.1",   // 建议使用已集成 SukiSU 的分支，或主线分支由脚本集成
+      "device": "odin"
     },
-    "withKernelSU": true,
+    "withKernelSU": true,          // 必须设为 true 才会执行集成脚本
     "toolchains": [
       {
-        "repo": "https://android.googlesource.com/platform/prebuilts/gas/linux-x86",
-        "branch": "master",
-        "name": "gas"
-      },
-      {
-        "repo": "https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone/",
-        "branch": "12",
-        "name": "clang"
+        "name": "clang",
+        "repo": "https://github.com/LineageOS/android_prebuilts_clang_host_linux-x86_clang-standalone",
+        "branch": "lineage-20.0"
       }
     ],
     "params": {
       "ARCH": "arm64",
       "CROSS_COMPILE": "aarch64-linux-gnu-",
-      "CROSS_COMPILE_ARM32": "arm-linux-gnueabi-",
-      "CROSS_COMPILE_COMPAT": "arm-linux-gnueabi-",
       "CLANG_TRIPLE": "aarch64-linux-gnu-",
-      "AR": "",
-      "CC": "clang"
-    }    
+      "CC": "clang",
+      "AR": "llvm-ar"
+    }
   }
 ]
