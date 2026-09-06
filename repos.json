@@ -7,13 +7,13 @@
       "device": "odin"
     },
     "withKernelSU": true,          // 必须设为 true 才会执行集成脚本
-    "toolchains": [
-      {
-        "name": "clang",
-        "repo": "https://github.com/LineageOS/android_prebuilts_clang_host_linux-x86_clang-standalone",
-        "branch": "lineage-20.0"
-      }
-    ],
+"toolchains": [
+  {
+    "name": "clang",
+    "repo": "https://github.com/Android-Build-Toolchains/aosp-clang",
+    "branch": "main"
+  }
+],
     "params": {
       "ARCH": "arm64",
       "CROSS_COMPILE": "aarch64-linux-gnu-",
